@@ -1,0 +1,60 @@
+.home-mainSection {
+  top: 140px;
+  position: relative;
+}
+
+.sections-wrapper > * {
+  width: 100%;
+}
+
+.getIdeas-header,
+.ourLatest-header,
+.briyani-header,
+.cakes-header,
+.healthy-header,
+.under30m-header,
+.under10m-header,
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.getIdeas-contents,
+.ourLatest-contents,
+.briyani-contents,
+.cakes-contents,
+.healthy-contents,
+.under30m-contents,
+.under10m-contents,
+.category-contents {
+  display: flex;
+  gap: 25px;
+}
+
+.getIdeas-section,
+.ourLatest-section,
+.briyani-section,
+.cakes-section,
+.healthy-section,
+.under30m-section,
+.under10m-section,
+.category-section {
+  margin-bottom: 75px;
+}
+
+.view-more {
+  background: transparent;
+  border: none;
+  outline: none;
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+
+.view-more:hover {
+  cursor: pointer;
+}
+
+.bottom-section {
+  margin-bottom: 100px;
+}

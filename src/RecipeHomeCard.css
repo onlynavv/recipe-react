@@ -1,0 +1,28 @@
+.recipeCard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.recipeCard-container:hover {
+  cursor: pointer;
+}
+
+.recipeImg-container {
+  width: 250px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+}
+
+.recipeImg-container > img {
+  width: 100%;
+  object-fit: cover;
+  height: 300px;
+}
+
+.recipe-name {
+  display: flex;
+  justify-content: center;
+}

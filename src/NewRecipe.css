@@ -1,0 +1,48 @@
+.newRecipe-section {
+  top: 140px;
+  position: relative;
+}
+
+.newRecipe-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 70px;
+  background-color: #fff;
+  height: max-content;
+  justify-content: center;
+  flex: 1;
+  margin: 0 auto;
+  align-items: flex-start;
+  border-radius: 7px;
+  box-shadow: 1px 1px 4px 1px #cbcbcb;
+}
+
+.newRecipe-wrapper > * {
+  width: 100%;
+}
+
+.goBack-btn {
+  position: relative;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  background: none;
+  outline: none;
+  border: none;
+  width: fit-content;
+  padding: 10px 25px;
+  font-size: 20px;
+}
+
+.goBack-btn:hover {
+  cursor: pointer;
+}
+
+.heading-div {
+  display: flex;
+  justify-content: center;
+}
+
+.heading-div > * {
+  color: #df1145;
+}

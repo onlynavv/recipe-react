@@ -1,0 +1,44 @@
+.recipeListCard-wrapper {
+  display: flex;
+  height: 210px;
+  gap: 20px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.recipeListCard-left {
+  display: flex;
+  flex: 0.4;
+}
+
+.recipeListCard-img {
+  width: 100%;
+}
+
+.recipeListCard-img > img {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+
+.recipeListCard-img > img:hover {
+  cursor: pointer;
+}
+
+.recipeListCard-right {
+  display: flex;
+  flex: 0.6;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.recipeName,
+.recipeAuthor {
+  text-transform: capitalize;
+}
+
+.recipeName:hover,
+.recipeDesc:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

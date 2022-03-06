@@ -1,0 +1,33 @@
+.recipiesList-section {
+  top: 140px;
+  position: relative;
+}
+
+.recipiesList-wrapper {
+  display: flex;
+  padding: 30px;
+  background-color: #fff;
+  height: max-content;
+  justify-content: center;
+  flex: 1;
+  margin: 0 auto;
+  align-items: flex-start;
+  gap: 50px;
+}
+
+.recipiesList-left {
+  flex: 0.7;
+}
+
+.recipiesList-right {
+  flex: 0.3;
+}
+
+.category-subdiv-list {
+  padding: 15px 0;
+  border-bottom: solid 1px #dddddd;
+}
+
+.category-subdiv-list:hover {
+  cursor: pointer;
+}

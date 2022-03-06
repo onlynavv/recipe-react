@@ -1,0 +1,95 @@
+.singleRecipePage-section {
+  top: 140px;
+  position: relative;
+}
+
+.singleRecipePage-wrapper {
+  display: flex;
+  padding: 30px;
+  background-color: #fff;
+  height: max-content;
+  justify-content: center;
+  flex: 1;
+  margin: 0 auto;
+  align-items: flex-start;
+  gap: 50px;
+}
+
+.singleRecipePage-left {
+  flex: 0.7;
+}
+
+.singleRecipePage-right {
+  flex: 0.3;
+}
+
+.category-subdiv-list {
+  padding: 15px 0;
+  border-bottom: solid 1px #dddddd;
+}
+
+.singleRecipe-imageContainer {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.singleRecipe-imageContainer > img {
+  width: 100%;
+  height: 451px;
+  object-fit: cover;
+}
+
+.singleRecipe-content {
+  margin-top: 25px;
+}
+
+.singleRecipe-info {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 25px;
+  background: #f7f7f7;
+  padding: 15px;
+}
+
+.singleRecipe-prepTime {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.singleRecipe-description > p {
+  margin-bottom: 25px;
+}
+
+.singleRecipe-ingredients > ul > * {
+  margin-bottom: 15px;
+}
+
+.singleRecipe-ingredients > ul > li > p {
+  display: flex;
+  gap: 15px;
+}
+
+.singleRecipe-ingredients > h3 {
+  margin-bottom: 15px;
+}
+
+.singleRecipe-instructions {
+  margin-top: 25px;
+}
+
+.singleRecipe-instructions > h3 {
+  margin-bottom: 15px;
+}
+
+.singleRecipe-instructions > ul > * {
+  margin-bottom: 15px;
+}
+
+.singleRecipe-instructions > ul > li > p {
+  display: flex;
+  gap: 15px;
+}
