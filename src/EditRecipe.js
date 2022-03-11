@@ -5,7 +5,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup';
 import "./NewRecipe.css"
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useHistory} from 'react-router-dom'
+import { useHistory, useParams} from 'react-router-dom'
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -23,15 +23,19 @@ const validateFormSchema = yup.object({
     recipeDescription: yup.string().min(150, "must be minimum of 150 words").required("Please fill job description")
 })
 
-const NewRecipe = () => {
+const EditRecipe = () => {
 
     const history = useHistory()
 
     const { enqueueSnackbar } = useSnackbar();
 
+    const {id} = useParams()
+
     const [recipeCategoryList, setRecipeCategoryList] = useState([])
 
     const [recipeAdded, setRecipeAdded] = useState(false)
+
+    const [recipeDetails, setRecipeDetails] = useState({})
 
     const {user, isUserAuthenticated, isUserLoggedIn} = useGlobalContext()
 
@@ -57,6 +61,21 @@ const NewRecipe = () => {
 
     console.log(user)
 
+    const getRecipeDetails = async() => {
+        fetch(`https://recipe-node-app.herokuapp.com/recipe/ingredients/getRecipeDetailsById/${id}`, {
+            method:'GET',
+            headers: { "Content-Type": "application/json"}
+                })
+        .then((data)=> data.json())
+        .then((details)=> setRecipeDetails(details))
+    }
+
+    console.log(recipeDetails && recipeDetails, "73")
+
+    useEffect(()=>{
+        getRecipeDetails()
+    }, [])
+
     const getRecipeCategoryList = async() => {
         fetch("https://recipe-node-app.herokuapp.com/recipe/ingredients/getRecipeCategory", {
             method:'GET',
@@ -70,11 +89,17 @@ const NewRecipe = () => {
         getRecipeCategoryList()
     }, [])
 
+    useEffect(()=>{
+        setInstructionList(recipeDetails?.instructionList)
+        setIngredientsList(recipeDetails?.ingredientsList)
+        setRecipePic(recipeDetails?.recipePic)
+    },[recipeDetails])
+
     console.log(recipeCategoryList)
 
-    const [instructionList, setInstructionList] = useState([{instruction:""}])
+    const [instructionList, setInstructionList] = useState()
 
-    const [ingredientsList, setIngredientsList] = useState([{unit:"", amount:"", ingredientName:""}])
+    const [ingredientsList, setIngredientsList] = useState(recipeDetails && recipeDetails?.ingredientsList)
 
     const handleInstructionChange = (e, index) => {
         const {name, value} = e.target
@@ -115,7 +140,7 @@ const NewRecipe = () => {
 
     // -------------------------------------------------------------------------------------------
 
-    const [recipePic, setRecipePic] = useState("")
+    const [recipePic, setRecipePic] = useState()
     const [isLoading, setIsLoading] = useState(false)
     const [photoError, setPhotoError] = useState({show:false, msg:""})
 
@@ -152,33 +177,36 @@ const NewRecipe = () => {
 
     const {handleBlur, handleChange, handleSubmit, errors, values, touched, resetForm} = useFormik(
         {
-            initialValues:{recipeName:"", servings:"", totalTime:"", recipeCat:"", recipeDescription:""},
+            initialValues:{recipeName:recipeDetails?.recipeName, servings:recipeDetails?.servings, totalTime:recipeDetails?.totalTime, recipeCat:recipeDetails?.recipeCat, recipeDescription:recipeDetails?.recipeDescription},
+            enableReinitialize:true,
             validationSchema: validateFormSchema,
             onSubmit: (values) => {
-                createNewRecipe(values)
+                updateRecipe(values)
             }
         }
     )
 
-    const createNewRecipe = async(values) => {
+    const updateRecipe = async(values) => {
         console.log({...values, ingredientsList, instructionList, recipePic})
         try{
-            const resp = await fetch('https://recipe-node-app.herokuapp.com/recipe/ingredients/createNewRecipe', {
-            method:'POST',
+            const resp = await fetch(`http://localhost:9000/recipe/ingredients/editRecipeDetail/${id}`, {
+            method:'PUT',
             headers: { "Content-Type": "application/json", "x-auth-token":user.token},
-            body: JSON.stringify({...values, ingredientsList, instructionList, recipePic, author: user.username, authorId: user._id, authorEmail: user.email})
+            body: JSON.stringify({...values, ingredientsList, instructionList, recipePic})
                 })
             if(resp.ok){
-                setRecipePic("")
-                setInstructionList([{instruction:""}])
-                setIngredientsList([{unit:"", amount:"", ingredientName:""}])
-                resetForm()
-                setRecipeAdded(true)
+                history.goBack()
             }
         }catch(error){
             console.warn(error.toString())
         }
     }
+
+    console.log(recipeDetails?.ingredientsList)
+    console.log(ingredientsList && ingredientsList)
+    console.log(recipeDetails?.recipePic)
+    console.log(recipeDetails?.recipeName)
+    console.log(values.recipeCat)
 
   return (
     <section className='newRecipe-section'>
@@ -186,17 +214,18 @@ const NewRecipe = () => {
             <div className='newRecipe-wrapper'>
                 <button onClick={()=>{history.goBack()}} className="goBack-btn"><ArrowBackIosIcon /> Back </button>
                 <div className='heading-div'>
-                    <h1>Add New Recipe</h1>
+                    <h1>Edit Recipe</h1>
                 </div>
                 <form className='form-wrapper' onSubmit={handleSubmit}>
                     <div className='form-control'>
-                        <TextField className="userInput" label='Recipe Name' placeholder='Enter Recipe Name' id="recipeName" name="recipeName" value={values.recipeName} error={errors.recipeName && touched.recipeName} helperText={errors.recipeName && touched.recipeName && errors.recipeName} onChange={handleChange} onBlur={handleBlur}  multiline variant="standard" />
+                        <InputLabel style={{fontWeight:"900"}} id="demo-multiple-chip-label">Recipe Name</InputLabel>
+                        <TextField className="userInput" placeholder='Enter Recipe Name' id="recipeName" name="recipeName" value={values.recipeName} error={errors.recipeName && touched.recipeName} helperText={errors.recipeName && touched.recipeName && errors.recipeName} onChange={handleChange} onBlur={handleBlur}  multiline variant="standard" />
                     </div>
                     <div className='form-control'>
                         <InputLabel style={{fontWeight:"900"}} id="demo-multiple-chip-label">Category</InputLabel>
                         <Select
                             name="recipeCat"
-                            value={values.recipeCat}
+                            value={values?.recipeCat}
                             onChange={handleChange}
                             error={errors.recipeCat && touched.recipeCat}
                             onBlur={handleBlur}
@@ -220,20 +249,22 @@ const NewRecipe = () => {
                             placeholder="Enter Description"
                             className="userInput textareaInput"
                             minRows={5}
-                            id="recipeDescription" name="recipeDescription" value={values.recipeDescription} error={errors.recipeDescription && touched.recipeDescription} helperText={errors.recipeDescription && touched.recipeDescription && errors.recipeDescription} onChange={handleChange} onBlur={handleBlur}
+                            id="recipeDescription" name="recipeDescription" value={values?.recipeDescription} error={errors.recipeDescription && touched.recipeDescription} helperText={errors.recipeDescription && touched.recipeDescription && errors.recipeDescription} onChange={handleChange} onBlur={handleBlur}
                         />
-                        {values.recipeDescription.length < recipeDespLength && <p>{recipeDespLength - values.recipeDescription.length} / {recipeDespLength} words remaining</p>}
+                        {values?.recipeDescription?.length < recipeDespLength && <p>{recipeDespLength - values?.recipeDescription?.length} / {recipeDespLength} words remaining</p>}
                         <p style={{color:"#d32f2f"}}>{errors.recipeDescription && touched.recipeDescription && errors.recipeDescription}</p>
                     </div>
                     <div className='form-control'>
-                        <TextField className="userInput" label='Servings' placeholder='Enter Servings' id="servings" name="servings" value={values.servings} error={errors.servings && touched.servings} helperText={errors.servings && touched.servings && errors.servings} onChange={handleChange} onBlur={handleBlur}  multiline variant="standard" />
+                        <InputLabel style={{fontWeight:"900"}} id="demo-multiple-chip-label">Servings</InputLabel>
+                        <TextField className="userInput" placeholder='Enter Servings' id="servings" name="servings" value={values.servings} error={errors.servings && touched.servings} helperText={errors.servings && touched.servings && errors.servings} onChange={handleChange} onBlur={handleBlur}  multiline variant="standard" />
                     </div>
                     <div className='form-control'>
-                        <TextField className="userInput" label='Total Time' placeholder='Enter Total Time for the Recipe' id="totalTime" name="totalTime" value={values.totalTime} error={errors.totalTime && touched.totalTime} helperText={errors.totalTime && touched.totalTime && errors.totalTime} onChange={handleChange} onBlur={handleBlur}  multiline variant="standard" />
+                        <InputLabel style={{fontWeight:"900"}} id="demo-multiple-chip-label">Total Time</InputLabel>
+                        <TextField className="userInput" placeholder='Enter Total Time for the Recipe' id="totalTime" name="totalTime" value={values.totalTime} error={errors.totalTime && touched.totalTime} helperText={errors.totalTime && touched.totalTime && errors.totalTime} onChange={handleChange} onBlur={handleBlur}  multiline variant="standard" />
                     </div>
                     <div className='form-control'>
                         <InputLabel style={{fontWeight:"900"}} id="demo-simple-select-standard-label" className="userinput">Ingredients</InputLabel>
-                        {ingredientsList.map((item,index)=>{
+                        {ingredientsList?.map((item,index)=>{
                                 return(
                                     <div className='ingredientsList-div' key={index}>
                                         <h4>Ingredient {index + 1}</h4>
@@ -291,7 +322,7 @@ const NewRecipe = () => {
                     </div>
                     <div className='form-control'>
                         <InputLabel id="demo-simple-select-standard-label" style={{fontWeight:"900"}} className="userInput">Recipe Instructions</InputLabel>
-                        {instructionList.map((item,index)=>{
+                        {instructionList?.map((item,index)=>{
                             return(
                                 <div className='instruction-div' key={index}>
                                     <h4>Instruction {index + 1}</h4>
@@ -317,8 +348,12 @@ const NewRecipe = () => {
                         <InputLabel id="demo-simple-select-standard-label" style={{fontWeight:"900"}} className="userInput">Upload Recipe Photo</InputLabel>
                         <TextField name="upload-photo" type="file" helperText={photoError.show && photoError.msg} onChange={(e)=>handlePhotoSelect(e.target.files[0])} />
                         {isLoading && <Spinner name="circle" color="red"/>}
+                        <div className='image-preview'>
+                            <img src={recipeDetails.recipePic} alt={recipeDetails.recipeName}></img>
+                        </div>
+                        <p>want to update recipe photo ? then select <b>choose file</b>, otherwise previous recipe photo will be retained</p>
                     </div>
-                    <Button className="submitBtn" variant="contained" size="medium"  type="submit">Add Recipe</Button>
+                    <Button className="submitBtn" variant="contained" size="medium"  type="submit">Edit Recipe</Button>
                 </form>
             </div>
         </div>
@@ -326,4 +361,4 @@ const NewRecipe = () => {
   )
 }
 
-export default NewRecipe
+export default EditRecipe

@@ -46,3 +46,68 @@
 .heading-div > * {
   color: #df1145;
 }
+
+.ingredientsList-div,
+.instruction-div {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px 50px;
+  margin-bottom: 10px;
+  border: dashed 1px #cbcbcb;
+  box-shadow: 0 10px 20px -15px rgb(0 0 0 / 20%);
+}
+
+.removeBtn,
+.addMore {
+  background: white;
+  border: solid 1px lightgrey;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px 8px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.removeBtn:hover,
+.addMore:hover {
+  cursor: pointer;
+}
+
+.removeBtn:hover {
+  background-color: #e5003a;
+  border: solid 1px #e5003a;
+  color: white;
+  font-weight: 600;
+}
+
+.addMore:hover {
+  background-color: #1976d2;
+  border: solid 1px #1976d2;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-box {
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.textareaInput {
+  padding: 12px;
+}
+
+.image-preview {
+  width: 250px;
+  height: 250px;
+}
+
+.image-preview > img {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}

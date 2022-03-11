@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 15px;
   width: 100%;
+  align-items: center;
 }
 
 .recipeCard-container:hover {
@@ -25,4 +26,30 @@
 .recipe-name {
   display: flex;
   justify-content: center;
+}
+
+.recipeImg-container {
+  position: relative;
+}
+
+.totalRating-homediv {
+  position: absolute;
+  bottom: 18px;
+  right: 20px;
+  background: white;
+  padding: 5px 15px;
+  width: fit-content;
+  display: flex;
+  border-radius: 25px;
+  color: #000;
+  font-weight: 700;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.totalRating-homediv > svg {
+  color: #5fc25b;
+  font-size: 16px;
 }

@@ -73,7 +73,7 @@ const CategoryRecipies = () => {
             </div>
             <div className='recipiesList-right'>
                 <div className='category-subdiv'>
-                    <h3>CATEGORIES</h3>
+                    <h2>CATEGORIES</h2>
                     {categoryList.length > 0 && categoryList.map((item)=>{
                         return(
                             <p key={item._id} onClick={()=>history.push(`/categoryRecipies/${item.recipeCatName}`)} className="category-subdiv-list">{item.recipeCatName}</p>

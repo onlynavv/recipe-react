@@ -59,7 +59,7 @@ const YourRecipes = () => {
             <div className='recipiesList-left'>
                 <button onClick={()=>{history.goBack()}} className="goBack-btn"><ArrowBackIosIcon /> Back </button>
                 <div className='recipiesList-header'>
-                    <h2>Recipies</h2>
+                    <h2>Your Recipies</h2>
                 </div>
                 <div className='recipeList-cards-wrapper'>
                     {recipiesList.length > 0 && recipiesList.map((item)=>{
@@ -69,7 +69,7 @@ const YourRecipes = () => {
             </div>
             <div className='recipiesList-right'>
                 <div className='category-subdiv'>
-                    <h3>CATEGORIES</h3>
+                    <h2>CATEGORIES</h2>
                     {categoryList.length > 0 && categoryList.map((item)=>{
                         return(
                             <p key={item._id} onClick={()=>history.push(`/categoryRecipies/${item.recipeCatName}`)} className="category-subdiv-list">{item.recipeCatName}</p>

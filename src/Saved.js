@@ -5,7 +5,7 @@ import RecipiesListCard from './RecipiesListCard';
 import "./RecipiesList.css"
 import { useGlobalContext } from './context';
 
-const RecipiesList = () => {
+const Saved = () => {
 
     const history = useHistory()
 
@@ -24,12 +24,12 @@ const RecipiesList = () => {
     console.log(user)
 
     const getRecipiesList = async() => {
-        fetch("https://recipe-node-app.herokuapp.com/recipe/ingredients/getAllRecipies", {
+        fetch("http://localhost:9000/recipe/ingredients/getUsersFavorites", {
             method:'GET',
-            headers: { "Content-Type": "application/json"}
+            headers: { "Content-Type": "application/json", "x-auth-token":user.token}
                 })
         .then((data)=> data.json())
-        .then((details)=> setRecipiesList(details))
+        .then((details)=> setRecipiesList(details.favourites))
     }
 
     console.log(recipiesList.length > 0 && recipiesList, "35")
@@ -59,7 +59,7 @@ const RecipiesList = () => {
             <div className='recipiesList-left'>
                 <button onClick={()=>{history.goBack()}} className="goBack-btn"><ArrowBackIosIcon /> Back </button>
                 <div className='recipiesList-header'>
-                    <h2>Recipies</h2>
+                    <h2>Saved Recipies</h2>
                 </div>
                 <div className='recipeList-cards-wrapper'>
                     {recipiesList.length > 0 && recipiesList.map((item)=>{
@@ -82,4 +82,4 @@ const RecipiesList = () => {
   )
 }
 
-export default RecipiesList
+export default Saved

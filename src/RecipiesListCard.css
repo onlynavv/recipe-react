@@ -42,3 +42,30 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+.recipe-title-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.update-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.update-actions > button {
+  width: fit-content;
+  height: fit-content;
+  padding: 5px;
+  outline: none;
+  background: transparent;
+  border: none;
+}
+
+.update-actions > button:hover {
+  cursor: pointer;
+}
+
+.update-actions > button > svg {
+  color: #404040;
+}

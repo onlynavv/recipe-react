@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -31,7 +31,6 @@ const Navbar = () => {
     setIsSidebarOpen(false);
   };
 
-
   return (
     <>
         <MuiAppBar className="navbar navbar-background">
@@ -63,6 +62,9 @@ const Navbar = () => {
                 </li>
                 <li>
                     {isUserAuthenticated && <Link to="/newRecipe">New Recipe</Link>}
+                </li>
+                <li>
+                    {isUserAuthenticated && <Link to="/saved">Saved</Link>}
                 </li>
                 <li>
                     {isUserAuthenticated ? <p onClick={userLogout}>User Logout</p> : <Link to="/login">User Login</Link>}

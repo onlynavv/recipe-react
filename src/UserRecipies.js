@@ -1,13 +1,15 @@
 import React,{useState, useEffect} from 'react'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import RecipiesListCard from './RecipiesListCard';
 import "./RecipiesList.css"
 import { useGlobalContext } from './context';
 
-const RecipiesList = () => {
+const UserRecipies = () => {
 
     const history = useHistory()
+
+    const {id} = useParams()
 
     const [recipiesList, setRecipiesList] = useState([])
 
@@ -24,7 +26,7 @@ const RecipiesList = () => {
     console.log(user)
 
     const getRecipiesList = async() => {
-        fetch("https://recipe-node-app.herokuapp.com/recipe/ingredients/getAllRecipies", {
+        fetch(`http://localhost:9000/recipe/ingredients/getSingleUserRecipies/${id}`, {
             method:'GET',
             headers: { "Content-Type": "application/json"}
                 })
@@ -82,4 +84,4 @@ const RecipiesList = () => {
   )
 }
 
-export default RecipiesList
+export default UserRecipies

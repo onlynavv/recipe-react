@@ -35,6 +35,9 @@ form,
 
 .form-control {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .userInput {
